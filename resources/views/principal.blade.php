@@ -114,7 +114,7 @@
       </button>
     </header>
     <div class="app-body">
-      <div class="sidebar">
+      {{-- <div class="sidebar">
         <nav class="sidebar-nav">
           <ul class="nav">
             <li class="nav-item">
@@ -314,8 +314,13 @@
           </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
-      </div>
-      <main class="main">
+      </div> --}}
+
+      {{-- El contenido del menu --}}
+      @include('layout.navLateral')
+      {{-- fin del contenido del menu --}}
+      
+      {{-- <main class="main">
         <!-- Breadcrumb-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">Home</li>
@@ -1055,7 +1060,11 @@
             <!-- /.row-->
           </div>
         </div>
-      </main>
+      </main> --}}
+      {{-- Se inicia el contenido principal --}}
+      @yield('contenido')
+      {{-- fin del contenido principal --}}
+
       <aside class="aside-menu">
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item">

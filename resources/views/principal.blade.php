@@ -66,6 +66,7 @@
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <img class="img-avatar" src="img/avatars/6.jpg" alt="admin@bootstrapmaster.com">
             </a>
+<<<<<<< HEAD
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-header text-center">
                 <strong>Account</strong>
@@ -73,6 +74,31 @@
               <a class="dropdown-item" href="#">
                 <i class="fa fa-bell-o"></i> Updates
                 <span class="badge badge-info">42</span>
+=======
+            <div class="divider"></div>
+            <a class="dropdown-item" href="#">
+              <i class="fa fa-shield"></i> Lock Account</a>
+            <a class="dropdown-item" href="#">
+              <i class="fa fa-lock"></i> Logout</a>
+          </div>
+        </li>
+      </ul>
+      <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <button class="navbar-toggler aside-menu-toggler d-lg-none" type="button" data-toggle="aside-menu-show">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </header>
+    <div class="app-body">
+      {{-- <div class="sidebar">
+        <nav class="sidebar-nav">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <i class="nav-icon icon-speedometer"></i> Dashboard
+                <span class="badge badge-primary">NEW</span>
+>>>>>>> fc068d974613dc2120b001eca07cf8bb0e3a0a18
               </a>
               <a class="dropdown-item" href="#">
                 <i class="fa fa-envelope-o"></i> Messages
@@ -82,9 +108,35 @@
                 <i class="fa fa-tasks"></i> Tasks
                 <span class="badge badge-danger">42</span>
               </a>
+<<<<<<< HEAD
               <a class="dropdown-item" href="#">
                 <i class="fa fa-comments"></i> Comments
                 <span class="badge badge-warning">42</span>
+=======
+            </li>
+          </ul>
+        </nav>
+        <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+      </div> --}}
+
+      {{-- El contenido del menu --}}
+      @include('layout.navLateral')
+      {{-- fin del contenido del menu --}}
+      
+      {{-- <main class="main">
+        <!-- Breadcrumb-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Home</li>
+          <li class="breadcrumb-item">
+            <a href="#">Admin</a>
+          </li>
+          <li class="breadcrumb-item active">Dashboard</li>
+          <!-- Breadcrumb Menu-->
+          <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+              <a class="btn" href="#">
+                <i class="icon-speech"></i>
+>>>>>>> fc068d974613dc2120b001eca07cf8bb0e3a0a18
               </a>
               <div class="dropdown-header text-center">
                 <strong>Settings</strong>
@@ -107,6 +159,33 @@
               <a class="dropdown-item" href="#">
                 <i class="fa fa-lock"></i> Logout</a>
             </div>
+<<<<<<< HEAD
+=======
+            <!-- /.row-->
+          </div>
+        </div>
+      </main> --}}
+      {{-- Se inicia el contenido principal --}}
+      @yield('contenido')
+      {{-- fin del contenido principal --}}
+
+      <aside class="aside-menu">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">
+              <i class="icon-list"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#messages" role="tab">
+              <i class="icon-speech"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#settings" role="tab">
+              <i class="icon-settings"></i>
+            </a>
+>>>>>>> fc068d974613dc2120b001eca07cf8bb0e3a0a18
           </li>
         </ul>
         <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">

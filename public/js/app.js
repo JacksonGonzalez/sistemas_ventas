@@ -47255,7 +47255,7 @@ exports = module.exports = __webpack_require__(42)(false);
 
 
 // module
-exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display:list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n", ""]);
+exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -47873,6 +47873,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47882,7 +47888,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arrayCategoria: [],
             modal: 0,
             tituloModal: '',
-            tipoAccion: 0
+            tipoAccion: 0,
+            errorCategoria: 0,
+            errorMostrarMsjCategoria: []
         };
     },
 
@@ -47890,14 +47898,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         listarCategoria: function listarCategoria() {
             var me = this;
             axios.get('/categoria').then(function (response) {
-                // handle success
                 me.arrayCategoria = response.data;
             }).catch(function (error) {
-                // handle error
                 console.log(error);
             });
         },
-        registrarCategoria: function registrarCategoria() {},
+        registrarCategoria: function registrarCategoria() {
+            if (this.validarCategoria()) {
+                return;
+            }
+
+            var me = this;
+
+            axios.post('/categoria/registrar', {
+                'nombre': this.nombre,
+                'descripcion': this.descripcion
+            }).then(function (response) {
+                me.cerrarModal();
+                me.listarCategoria();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        validarCategoria: function validarCategoria() {
+            this.errorCategoria = 0;
+            this.errorMostrarMsjCategoria = [];
+
+            if (!this.nombre) this.errorMostrarMsjCategoria.push("El nombre de la categoría no puede estar vacío.");
+
+            if (this.errorMostrarMsjCategoria.length) this.errorCategoria = 1;
+
+            return this.errorCategoria;
+        },
         cerrarModal: function cerrarModal() {
             this.modal = 0;
             this.tituloModal = '';
@@ -47914,7 +47946,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             case 'registrar':
                                 {
                                     this.modal = 1;
-                                    this.tituloModal = 'Registar Categoria';
+                                    this.tituloModal = 'Registrar Categoría';
                                     this.nombre = '';
                                     this.descripcion = '';
                                     this.tipoAccion = 1;
@@ -47947,7 +47979,7 @@ var render = function() {
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header" }, [
           _c("i", { staticClass: "fa fa-align-justify" }),
-          _vm._v(" Categorías\n                    "),
+          _vm._v(" Categorías\n                "),
           _c(
             "button",
             {
@@ -47961,7 +47993,7 @@ var render = function() {
             },
             [
               _c("i", { staticClass: "icon-plus" }),
-              _vm._v(" Nuevo\n                    ")
+              _vm._v(" Nuevo\n                ")
             ]
           )
         ]),
@@ -47997,7 +48029,7 @@ var render = function() {
                         },
                         [_c("i", { staticClass: "icon-pencil" })]
                       ),
-                      _vm._v("  \n                                    "),
+                      _vm._v("  \n                                "),
                       _vm._m(3, true)
                     ]),
                     _vm._v(" "),
@@ -48018,7 +48050,7 @@ var render = function() {
                           ])
                         : _c("div", [
                             _c("span", { staticClass: "badge badge-danger" }, [
-                              _vm._v("desactivado")
+                              _vm._v("Desactivado")
                             ])
                           ])
                     ])
@@ -48126,11 +48158,7 @@ var render = function() {
                               _vm.nombre = $event.target.value
                             }
                           }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "help-block" }, [
-                          _vm._v("(*) Ingrese el nombre de la categoría")
-                        ])
+                        })
                       ])
                     ]),
                     _vm._v(" "),
@@ -48155,7 +48183,10 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "email", placeholder: "Enter Email" },
+                          attrs: {
+                            type: "email",
+                            placeholder: "Ingrese descripción"
+                          },
                           domProps: { value: _vm.descripcion },
                           on: {
                             input: function($event) {
@@ -48167,7 +48198,34 @@ var render = function() {
                           }
                         })
                       ])
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errorCategoria,
+                            expression: "errorCategoria"
+                          }
+                        ],
+                        staticClass: "form-group row div-error"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-center text-error" },
+                          _vm._l(_vm.errorMostrarMsjCategoria, function(error) {
+                            return _c("div", {
+                              key: error,
+                              domProps: { textContent: _vm._s(error) }
+                            })
+                          })
+                        )
+                      ]
+                    )
                   ]
                 )
               ]),
@@ -48192,7 +48250,12 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-primary",
-                        attrs: { type: "button" }
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.registrarCategoria()
+                          }
+                        }
                       },
                       [_vm._v("Guardar")]
                     )
@@ -48224,13 +48287,13 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("ol", { staticClass: "breadcrumb" }, [
-      _c("li", { staticClass: "breadcrumb-item" }, [_vm._v("Inicio")]),
+      _c("li", { staticClass: "breadcrumb-item" }, [_vm._v("Home")]),
       _vm._v(" "),
       _c("li", { staticClass: "breadcrumb-item" }, [
-        _c("a", { attrs: { href: "" } }, [_vm._v("Admin")])
+        _c("a", { attrs: { href: "#" } }, [_vm._v("Admin")])
       ]),
       _vm._v(" "),
-      _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Categoria")])
+      _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Dashboard")])
     ])
   },
   function() {
@@ -48354,6 +48417,7 @@ var staticRenderFns = [
         staticClass: "modal fade",
         staticStyle: { display: "none" },
         attrs: {
+          id: "modalEliminar",
           tabindex: "-1",
           role: "dialog",
           "aria-labelledby": "myModalLabel",

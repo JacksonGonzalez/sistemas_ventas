@@ -17,7 +17,16 @@ class CategoriaController extends Controller
     {
         //validar seguridad por HTTP
         if (!$request->ajax()) return redirect('/');
-        $categorias = Categoria::paginate(5);
+
+        $buscar = $request->buscar;
+        $criterio = $request->criterio;
+
+        if($buscar == ''){
+            $categorias = Categoria::orderBy('id', 'DESC')->paginate(3);
+        }else{
+            $categorias = Categoria::where($criterio, 'like', '%'.$buscar.'%')->orderBy('id', 'desc')->paginate(3);
+        }
+
         return [
             'pagination' => [
                 'total'         => $categorias->total(),

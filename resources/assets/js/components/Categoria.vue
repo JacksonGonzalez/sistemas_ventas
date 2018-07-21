@@ -23,8 +23,9 @@
                                       <option value="nombre">Nombre</option>
                                       <option value="descripcion">Descripción</option>
                                     </select>
-                                    <input type="text" v-model="buscar" @keyup.enter="listarCategoria(1, this.buscar, this.criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarCategoria(1, this.buscar, this.criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text" v-model="buscar" @keyup.enter="listarCategoria(1, buscar, criterio)" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" @click="listarCategoria(1, buscar, criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <button type="submit" @click="listarCategoria(1, '', 'nombre')" class="btn btn-info"><i class="fa fa-list-ul"></i> Listar</button>
                                 </div>
                             </div>
                         </div>
@@ -194,7 +195,7 @@
         methods : {
             listarCategoria (page, buscar, criterio){
                 let me=this;
-                var url = '/categoria?page=' + page + '&buscar=' + me.buscar + '&criterio=' + me.criterio;
+                var url = '/categoria?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
                 axios.get(url).then(function (response) {
                     var respuesta = response.data;
                     me.arrayCategoria = respuesta.categorias.data;

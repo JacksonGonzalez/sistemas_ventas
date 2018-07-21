@@ -47855,6 +47855,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47915,7 +47916,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         listarCategoria: function listarCategoria(page, buscar, criterio) {
             var me = this;
-            var url = '/categoria?page=' + page + '&buscar=' + me.buscar + '&criterio=' + me.criterio;
+            var url = '/categoria?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
             axios.get(url).then(function (response) {
                 var respuesta = response.data;
                 me.arrayCategoria = respuesta.categorias.data;
@@ -48176,7 +48177,7 @@ var render = function() {
                       ) {
                         return null
                       }
-                      _vm.listarCategoria(1, this.buscar, this.criterio)
+                      _vm.listarCategoria(1, _vm.buscar, _vm.criterio)
                     },
                     input: function($event) {
                       if ($event.target.composing) {
@@ -48194,11 +48195,25 @@ var render = function() {
                     attrs: { type: "submit" },
                     on: {
                       click: function($event) {
-                        _vm.listarCategoria(1, this.buscar, this.criterio)
+                        _vm.listarCategoria(1, _vm.buscar, _vm.criterio)
                       }
                     }
                   },
                   [_c("i", { staticClass: "fa fa-search" }), _vm._v(" Buscar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        _vm.listarCategoria(1, "", "nombre")
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-list-ul" }), _vm._v(" Listar")]
                 )
               ])
             ])

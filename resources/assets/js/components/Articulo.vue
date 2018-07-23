@@ -139,7 +139,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="descripcion" class="form-control" placeholder="Ingrese descripción">
+                                        <input type="email" v-model="descripcion" class="form-control" placeholder="Ingrese descripción">
                                     </div>
                                 </div>
                                 <div v-show="errorArticulo" class="form-group row div-error">
@@ -270,8 +270,8 @@
                     'idcategoria': this.idcategoria,
                     'codigo': this.codigo,
                     'nombre': this.nombre,
-                    'stock' : this.stock,
-                    'precio_venta' : this.precio_venta,
+                    'stock': this.stock,
+                    'precio_venta': this.precio_venta,
                     'descripcion': this.descripcion
                 }).then(function (response) {
                     me.cerrarModal();
@@ -280,20 +280,24 @@
                     console.log(error);
                 });
             },
-            actualizarCategoria(){
-               if (this.validarCategoria()){
+            actualizarArticulo(){
+               if (this.validarArticulo()){
                     return;
                 }
                 
                 let me = this;
 
-                axios.put('/categoria/actualizar',{
+                axios.put('/articulo/actualizar',{
+                    'idcategoria': this.idcategoria,
+                    'codigo': this.codigo,
                     'nombre': this.nombre,
+                    'stock': this.stock,
+                    'precio_venta': this.precio_venta,
                     'descripcion': this.descripcion,
-                    'id': this.categoria_id
+                    'id': this.articulo_id
                 }).then(function (response) {
                     me.cerrarModal();
-                    me.listarCategoria(1,'','nombre');
+                    me.listarArticulo(1,'','nombre');
                 }).catch(function (error) {
                     console.log(error);
                 }); 
@@ -380,11 +384,11 @@
                 this.errorArticulo=0;
                 this.errorMostrarMsjArticulo =[];
 
-                if (this.idcategoria == 0) this.errorMostrarMsjArticulo.push("Selecione una categoría.");
-                if (!this.nombre) this.errorMostrarMsjArticulo.push("El nombre del Articulo no puede estar vacío.");
-                if (!this.stock) this.errorMostrarMsjArticulo.push("El stock del Articulo debe ser un número y no puede estar vacío.");
-                if (!this.precio_venta) this.errorMostrarMsjArticulo.push("El precio de venta del Articulo debe ser un numero y no puede estar vacío.");
-                
+                if (this.idcategoria==0) this.errorMostrarMsjArticulo.push("Seleccione una categoría.");
+                if (!this.nombre) this.errorMostrarMsjArticulo.push("El nombre del artículo no puede estar vacío.");
+                if (!this.stock) this.errorMostrarMsjArticulo.push("El stock del artículo debe ser un número y no puede estar vacío.");
+                if (!this.precio_venta) this.errorMostrarMsjArticulo.push("El precio venta del artículo debe ser un número y no puede estar vacío.");
+
                 if (this.errorMostrarMsjArticulo.length) this.errorArticulo = 1;
 
                 return this.errorArticulo;
@@ -392,14 +396,14 @@
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
-                this.idcategoria = 0;
+                this.idcategoria= 0;
                 this.nombre_categoria = '';
                 this.codigo = '';
-                this.nombre=''
+                this.nombre = '';
                 this.precio_venta = 0;
                 this.stock = 0;
-                this.descripcion='';
-                this.errorArticulo = 0;
+                this.descripcion = '';
+		        this.errorArticulo=0;
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
@@ -410,12 +414,12 @@
                             {
                                 this.modal = 1;
                                 this.tituloModal = 'Registrar Artículo';
-                                this.idcategoria = 0;
-                                this.nombre_categoria = '';
-                                this.codigo = '';
-                                this.nombre=''
-                                this.precio_venta = 0;
-                                this.stock = 0;
+                                this.idcategoria=0;
+                                this.nombre_categoria='';
+                                this.codigo='';
+                                this.nombre= '';
+                                this.precio_venta=0;
+                                this.stock=0;
                                 this.descripcion = '';
                                 this.tipoAccion = 1;
                                 break;
@@ -427,11 +431,11 @@
                                 this.tituloModal='Actualizar Artículo';
                                 this.tipoAccion=2;
                                 this.articulo_id=data['id'];
-                                this.idcategoria = data['idcategoria'];
-                                this.codigo = data['codigo'];
-                                this.nombre= data['nombre'];
-                                this.precio_venta = data['precio_venta'];
-                                this.stock = data['stock'];
+                                this.idcategoria=data['idcategoria'];
+                                this.codigo=data['codigo'];
+                                this.nombre = data['nombre'];
+                                this.stock=data['stock'];
+                                this.precio_venta=data['precio_venta'];
                                 this.descripcion= data['descripcion'];
                                 break;
                             }

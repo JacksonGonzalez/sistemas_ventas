@@ -49054,11 +49054,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
-        desactivarCategoria: function desactivarCategoria(id) {
+        desactivarArticulo: function desactivarArticulo(id) {
             var _this = this;
 
             swal({
-                title: 'Esta seguro de desactivar esta categoría?',
+                title: 'Esta seguro de desactivar este Articulo?',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -49068,15 +49068,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'btn btn-danger',
                 buttonsStyling: false,
-                reverseButtons: true
+                reverseButtons: false
             }).then(function (result) {
                 if (result.value) {
                     var me = _this;
 
-                    axios.put('/categoria/desactivar', {
+                    axios.put('/articulo/desactivar', {
                         'id': id
                     }).then(function (response) {
-                        me.listarCategoria(1, '', 'nombre');
+                        me.listarArticulo(1, '', 'nombre');
                         swal('Desactivado!', 'El registro ha sido desactivado con éxito.', 'success');
                     }).catch(function (error) {
                         console.log(error);
@@ -49086,11 +49086,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 result.dismiss === swal.DismissReason.cancel) {}
             });
         },
-        activarCategoria: function activarCategoria(id) {
+        activarArticulo: function activarArticulo(id) {
             var _this2 = this;
 
             swal({
-                title: 'Esta seguro de activar esta categoría?',
+                title: 'Esta seguro de activar este Articulo?',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -49100,15 +49100,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'btn btn-danger',
                 buttonsStyling: false,
-                reverseButtons: true
+                reverseButtons: false
             }).then(function (result) {
                 if (result.value) {
                     var me = _this2;
 
-                    axios.put('/categoria/activar', {
+                    axios.put('/articulo/activar', {
                         'id': id
                     }).then(function (response) {
-                        me.listarCategoria(1, '', 'nombre');
+                        me.listarArticulo(1, '', 'nombre');
                         swal('Activado!', 'El registro ha sido activado con éxito.', 'success');
                     }).catch(function (error) {
                         console.log(error);
@@ -49355,7 +49355,7 @@ var render = function() {
                                   attrs: { type: "button" },
                                   on: {
                                     click: function($event) {
-                                      _vm.desactivarCategoria(articulo.id)
+                                      _vm.desactivarArticulo(articulo.id)
                                     }
                                   }
                                 },
@@ -49370,7 +49370,7 @@ var render = function() {
                                   attrs: { type: "button" },
                                   on: {
                                     click: function($event) {
-                                      _vm.activarCategoria(articulo.id)
+                                      _vm.activarArticulo(articulo.id)
                                     }
                                   }
                                 },

@@ -77,7 +77,7 @@ class ArticuloController extends Controller
     {
         //validar seguridad por HTTP
         if(!$request->ajax()) return redirect('/');
-        $articulo = Categoria::findOrFail($request->id);
+        $articulo = Articulo::findOrFail($request->id);
         $articulo->idcategoria = $request->idcategoria;
         $articulo->codigo = $request->codigo;
         $articulo->nombre = $request->nombre;

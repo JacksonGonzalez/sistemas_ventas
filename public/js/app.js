@@ -49770,7 +49770,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
-                            type: "email",
+                            type: "text",
                             placeholder: "Ingrese descripción"
                           },
                           domProps: { value: _vm.descripcion },

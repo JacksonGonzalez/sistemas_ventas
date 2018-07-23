@@ -43,6 +43,7 @@ class ArticuloController extends Controller
             'articulos' => $articulos
         ];
     }  
+ 
 
     /**
      * Store a newly created resource in storage.

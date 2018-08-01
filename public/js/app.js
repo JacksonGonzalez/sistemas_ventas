@@ -53931,6 +53931,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -53939,7 +53944,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             persona_id: 0,
             nombre: '',
-            tipo_documento: '',
+            tipo_documento: 'CC',
             num_documento: '',
             direccion: '',
             telefono: '',
@@ -54012,92 +54017,91 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //Envia la petición para visualizar la data de esa página
             me.listarPersona(page, buscar, criterio);
         },
-        registrarArticulo: function registrarArticulo() {
-            if (this.validarArticulo()) {
+        registrarPersona: function registrarPersona() {
+            if (this.validarPersona()) {
                 return;
             }
 
             var me = this;
 
-            axios.post('/articulo/registrar', {
-                'idcategoria': this.idcategoria,
-                'codigo': this.codigo,
+            axios.post('/cliente/registrar', {
                 'nombre': this.nombre,
-                'stock': this.stock,
-                'precio_venta': this.precio_venta,
-                'descripcion': this.descripcion
+                'tipo_documento': this.tipo_documento,
+                'num_documento': this.num_documento,
+                'direccion': this.direccion,
+                'telefono': this.telefono,
+                'email': this.email
             }).then(function (response) {
                 me.cerrarModal();
-                me.listarArticulo(1, '', 'nombre');
+                me.listarPersona(1, '', 'nombre');
             }).catch(function (error) {
                 console.log(error);
             });
         },
-        actualizarArticulo: function actualizarArticulo() {
-            if (this.validarArticulo()) {
+        actualizarPersona: function actualizarPersona() {
+            if (this.validarPersona()) {
                 return;
             }
 
             var me = this;
 
-            axios.put('/articulo/actualizar', {
-                'idcategoria': this.idcategoria,
-                'codigo': this.codigo,
+            axios.put('/cliente/actualizar', {
                 'nombre': this.nombre,
-                'stock': this.stock,
-                'precio_venta': this.precio_venta,
-                'descripcion': this.descripcion,
-                'id': this.articulo_id
+                'tipo_documento': this.tipo_documento,
+                'num_documento': this.num_documento,
+                'direccion': this.direccion,
+                'telefono': this.telefono,
+                'email': this.email,
+                'id': this.persona_id
             }).then(function (response) {
                 me.cerrarModal();
-                me.listarArticulo(1, '', 'nombre');
+                me.listarPersona(1, '', 'nombre');
             }).catch(function (error) {
                 console.log(error);
             });
         },
-        validarArticulo: function validarArticulo() {
-            this.errorArticulo = 0;
-            this.errorMostrarMsjArticulo = [];
+        validarPersona: function validarPersona() {
+            this.errorPersona = 0;
+            this.errorMostrarMsjPersona = [];
 
-            if (this.idcategoria == 0) this.errorMostrarMsjArticulo.push("Seleccione una categoría.");
-            if (!this.nombre) this.errorMostrarMsjArticulo.push("El nombre del artículo no puede estar vacío.");
-            if (!this.stock) this.errorMostrarMsjArticulo.push("El stock del artículo debe ser un número y no puede estar vacío.");
-            if (!this.precio_venta) this.errorMostrarMsjArticulo.push("El precio venta del artículo debe ser un número y no puede estar vacío.");
+            if (!this.nombre) this.errorMostrarMsjPersona.push("El nombre de la Persona no puede estar vacío.");
+            if (!this.num_documento) this.errorMostrarMsjPersona.push("El numero de documento no puede estar vacío.");
+            if (!this.direccion) this.errorMostrarMsjPersona.push("La dirección no puede estar vacía.");
+            if (!this.telefono) this.errorMostrarMsjPersona.push("El telefono no puede estar vacío.");
+            if (!this.email) this.errorMostrarMsjPersona.push("El email no puede estar vacío.");
 
-            if (this.errorMostrarMsjArticulo.length) this.errorArticulo = 1;
+            if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
 
-            return this.errorArticulo;
+            return this.errorPersona;
         },
         cerrarModal: function cerrarModal() {
             this.modal = 0;
             this.tituloModal = '';
-            this.idcategoria = 0;
-            this.nombre_categoria = '';
-            this.codigo = '';
             this.nombre = '';
-            this.precio_venta = 0;
-            this.stock = 0;
-            this.descripcion = '';
-            this.errorArticulo = 0;
+            this.tipo_documento = 'CC';
+            this.num_documento = '';
+            this.direccion = '';
+            this.telefono = '';
+            this.email = '';
+            this.errorPersona = 0;
         },
         abrirModal: function abrirModal(modelo, accion) {
             var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
             switch (modelo) {
-                case "articulo":
+                case "persona":
                     {
                         switch (accion) {
                             case 'registrar':
                                 {
                                     this.modal = 1;
-                                    this.tituloModal = 'Registrar Artículo';
-                                    this.idcategoria = 0;
-                                    this.nombre_categoria = '';
-                                    this.codigo = '';
+                                    this.tituloModal = 'Registrar Cliente';
                                     this.nombre = '';
-                                    this.precio_venta = 0;
-                                    this.stock = 0;
-                                    this.descripcion = '';
+                                    this.tipo_documento = 'CC';
+                                    this.num_documento = '';
+                                    this.direccion = '';
+                                    this.telefono = '';
+                                    this.email = '';
                                     this.tipoAccion = 1;
                                     break;
                                 }
@@ -54105,15 +54109,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                 {
                                     //console.log(data);
                                     this.modal = 1;
-                                    this.tituloModal = 'Actualizar Artículo';
+                                    this.tituloModal = 'Actualizar Cliente';
                                     this.tipoAccion = 2;
-                                    this.articulo_id = data['id'];
-                                    this.idcategoria = data['idcategoria'];
-                                    this.codigo = data['codigo'];
+                                    this.persona_id = data['id'];
                                     this.nombre = data['nombre'];
-                                    this.stock = data['stock'];
-                                    this.precio_venta = data['precio_venta'];
-                                    this.descripcion = data['descripcion'];
+                                    this.tipo_documento = data['tipo_documento'];
+                                    this.num_documento = data['num_documento'];
+                                    this.direccion = data['direccion'];
+                                    this.telefono = data['telefono'];
+                                    this.email = data['email'];
                                     break;
                                 }
                         }
@@ -54467,125 +54471,6 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("Categoría")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.idcategoria,
-                                expression: "idcategoria"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.idcategoria = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "option",
-                              { attrs: { value: "0", disabled: "" } },
-                              [_vm._v("Seleccione")]
-                            ),
-                            _vm._v(" "),
-                            _vm._l(_vm.arrayCategoria, function(categoria) {
-                              return _c("option", {
-                                key: categoria.id,
-                                domProps: {
-                                  value: categoria.id,
-                                  textContent: _vm._s(categoria.nombre)
-                                }
-                              })
-                            })
-                          ],
-                          2
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
-                        [_vm._v("Código")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-md-9" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.codigo,
-                                expression: "codigo"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              placeholder: "Código de barras"
-                            },
-                            domProps: { value: _vm.codigo },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.codigo = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "barcode",
-                            {
-                              attrs: {
-                                value: _vm.codigo,
-                                options: { format: "EAN-13" }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                    Generando Código de Barras\n                                "
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
-                        },
                         [_vm._v("Nombre")]
                       ),
                       _vm._v(" "),
@@ -54602,7 +54487,7 @@ var render = function() {
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
-                            placeholder: "Nombre de artículo"
+                            placeholder: "Nombre de la Persona"
                           },
                           domProps: { value: _vm.nombre },
                           on: {
@@ -54624,7 +54509,67 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("Precio Venta")]
+                        [_vm._v("Tipo de Documento")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.tipo_documento,
+                                expression: "tipo_documento"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.tipo_documento = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "CC" } }, [
+                              _vm._v("Cedula Ciudadania")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "TI" } }, [
+                              _vm._v("Tarjeta de Identidad")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "CE" } }, [
+                              _vm._v("Cedula de Extranjeria")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "PS" } }, [
+                              _vm._v("Pasaporte")
+                            ])
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Número de Documento")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -54633,19 +54578,22 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.precio_venta,
-                              expression: "precio_venta"
+                              value: _vm.num_documento,
+                              expression: "num_documento"
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "number", placeholder: "" },
-                          domProps: { value: _vm.precio_venta },
+                          attrs: {
+                            type: "number",
+                            placeholder: "Numero de Documento"
+                          },
+                          domProps: { value: _vm.num_documento },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.precio_venta = $event.target.value
+                              _vm.num_documento = $event.target.value
                             }
                           }
                         })
@@ -54659,7 +54607,7 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("Stock")]
+                        [_vm._v("Dirección")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -54668,19 +54616,54 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.stock,
-                              expression: "stock"
+                              value: _vm.direccion,
+                              expression: "direccion"
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "number", placeholder: "" },
-                          domProps: { value: _vm.stock },
+                          attrs: { type: "text", placeholder: "Dirección" },
+                          domProps: { value: _vm.direccion },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.stock = $event.target.value
+                              _vm.direccion = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Telefono")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.telefono,
+                              expression: "telefono"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "number", placeholder: "Telefono" },
+                          domProps: { value: _vm.telefono },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.telefono = $event.target.value
                             }
                           }
                         })
@@ -54694,7 +54677,7 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "email-input" }
                         },
-                        [_vm._v("Descripción")]
+                        [_vm._v("Email")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -54703,22 +54686,22 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.descripcion,
-                              expression: "descripcion"
+                              value: _vm.email,
+                              expression: "email"
                             }
                           ],
                           staticClass: "form-control",
                           attrs: {
                             type: "email",
-                            placeholder: "Ingrese descripción"
+                            placeholder: "Ingrese el email"
                           },
-                          domProps: { value: _vm.descripcion },
+                          domProps: { value: _vm.email },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.descripcion = $event.target.value
+                              _vm.email = $event.target.value
                             }
                           }
                         })
@@ -54732,8 +54715,8 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: _vm.errorArticulo,
-                            expression: "errorArticulo"
+                            value: _vm.errorPersona,
+                            expression: "errorPersona"
                           }
                         ],
                         staticClass: "form-group row div-error"
@@ -54742,7 +54725,7 @@ var render = function() {
                         _c(
                           "div",
                           { staticClass: "text-center text-error" },
-                          _vm._l(_vm.errorMostrarMsjArticulo, function(error) {
+                          _vm._l(_vm.errorMostrarMsjPersona, function(error) {
                             return _c("div", {
                               key: error,
                               domProps: { textContent: _vm._s(error) }
@@ -54778,7 +54761,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            _vm.registrarArticulo()
+                            _vm.registrarPersona()
                           }
                         }
                       },
@@ -54794,7 +54777,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            _vm.actualizarArticulo()
+                            _vm.actualizarPersona()
                           }
                         }
                       },

@@ -40,7 +40,7 @@ class ClienteController extends Controller
         if(!$request->ajax()) return redirect('/');
         $persona = new Persona();
         $persona->nombre = $request->nombre;
-        $persona->tipo_documento = $request->tipo_descuento;
+        $persona->tipo_documento = $request->tipo_documento;
         $persona->num_documento = $request->num_documento;
         $persona->direccion = $request->direccion;
         $persona->telefono = $request->telefono;
@@ -54,7 +54,7 @@ class ClienteController extends Controller
         if(!$request->ajax()) return redirect('/');
         $persona = Persona::findOrFail($request->id);
         $persona->nombre = $request->nombre;
-        $persona->tipo_documento = $request->tipo_descuento;
+        $persona->tipo_documento = $request->tipo_documento;
         $persona->num_documento = $request->num_documento;
         $persona->direccion = $request->direccion;
         $persona->telefono = $request->telefono;

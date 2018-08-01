@@ -86,51 +86,56 @@
                         </div>
                         <div class="modal-body">
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Categoría</label>
-                                    <div class="col-md-9">
-                                        <select class="form-control" v-model="idcategoria">
-                                            <option value="0" disabled>Seleccione</option>
-                                            <option v-for="categoria in arrayCategoria" :key="categoria.id" :value="categoria.id" v-text="categoria.nombre"></option>
-                                        </select>                                        
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Código</label>
-                                    <div class="col-md-9">
-                                        <input type="text" v-model="codigo" class="form-control" placeholder="Código de barras">
-                                        <barcode :value="codigo" :options="{ format: 'EAN-13'}">
-                                            Generando Código de Barras
-                                        </barcode>                                        
-                                    </div>
-                                </div>
+                                
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="nombre" class="form-control" placeholder="Nombre de artículo">                                        
+                                        <input type="text" v-model="nombre" class="form-control" placeholder="Nombre de la Persona">                                        
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Precio Venta</label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Tipo de Documento</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="precio_venta" class="form-control" placeholder="">                                        
+                                        <select class="form-control" v-model="tipo_documento">
+                                            <option value="CC">Cedula Ciudadania</option>
+                                            <option value="TI">Tarjeta de Identidad</option>
+                                            <option value="CE">Cedula de Extranjeria</option>
+                                            <option value="PS">Pasaporte</option>
+                                        </select>                                        
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Stock</label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Número de Documento</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="stock" class="form-control" placeholder="">                                        
+                                        <input type="number" v-model="num_documento" class="form-control" placeholder="Numero de Documento">                                        
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Dirección</label>
                                     <div class="col-md-9">
-                                        <input type="email" v-model="descripcion" class="form-control" placeholder="Ingrese descripción">
+                                        <input type="text" v-model="direccion" class="form-control" placeholder="Dirección">                                        
                                     </div>
                                 </div>
-                                <div v-show="errorArticulo" class="form-group row div-error">
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="text-input">Telefono</label>
+                                    <div class="col-md-9">
+                                        <input type="number" v-model="telefono" class="form-control" placeholder="Telefono">                                        
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label" for="email-input">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="email" v-model="email" class="form-control" placeholder="Ingrese el email">
+                                    </div>
+                                </div>
+                                <div v-show="errorPersona" class="form-group row div-error">
                                     <div class="text-center text-error">
-                                        <div v-for="error in errorMostrarMsjArticulo" :key="error" v-text="error">
+                                        <div v-for="error in errorMostrarMsjPersona" :key="error" v-text="error">
 
                                         </div>
                                     </div>
@@ -140,8 +145,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
-                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarArticulo()">Guardar</button>
-                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarArticulo()">Actualizar</button>
+                            <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarPersona()">Guardar</button>
+                            <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarPersona()">Actualizar</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -160,7 +165,7 @@
             return {
                 persona_id: 0,
                 nombre : '',
-                tipo_documento : '',
+                tipo_documento : 'CC',
                 num_documento: '',
                 direccion: '',
                 telefono: '',
@@ -234,90 +239,89 @@
                 //Envia la petición para visualizar la data de esa página
                 me.listarPersona(page,buscar,criterio);
             },
-            registrarArticulo(){
-                if (this.validarArticulo()){
+            registrarPersona(){
+                if (this.validarPersona()){
                     return;
                 }
                 
                 let me = this;
 
-                axios.post('/articulo/registrar',{
-                    'idcategoria': this.idcategoria,
-                    'codigo': this.codigo,
+                axios.post('/cliente/registrar',{
                     'nombre': this.nombre,
-                    'stock': this.stock,
-                    'precio_venta': this.precio_venta,
-                    'descripcion': this.descripcion
+                    'tipo_documento' : this.tipo_documento,
+                    'num_documento' : this.num_documento,
+                    'direccion' : this.direccion,
+                    'telefono' : this.telefono,
+                    'email' : this.email
                 }).then(function (response) {
                     me.cerrarModal();
-                    me.listarArticulo(1,'','nombre');
+                    me.listarPersona(1,'','nombre');
                 }).catch(function (error) {
                     console.log(error);
                 });
             },
-            actualizarArticulo(){
-               if (this.validarArticulo()){
+            actualizarPersona(){
+               if (this.validarPersona()){
                     return;
                 }
                 
                 let me = this;
 
-                axios.put('/articulo/actualizar',{
-                    'idcategoria': this.idcategoria,
-                    'codigo': this.codigo,
+                axios.put('/cliente/actualizar',{
                     'nombre': this.nombre,
-                    'stock': this.stock,
-                    'precio_venta': this.precio_venta,
-                    'descripcion': this.descripcion,
-                    'id': this.articulo_id
+                    'tipo_documento' : this.tipo_documento,
+                    'num_documento' : this.num_documento,
+                    'direccion' : this.direccion,
+                    'telefono' : this.telefono,
+                    'email' : this.email,
+                    'id': this.persona_id
                 }).then(function (response) {
                     me.cerrarModal();
-                    me.listarArticulo(1,'','nombre');
+                    me.listarPersona(1,'','nombre');
                 }).catch(function (error) {
                     console.log(error);
                 }); 
             },
-            validarArticulo(){
-                this.errorArticulo=0;
-                this.errorMostrarMsjArticulo =[];
+            validarPersona(){
+                this.errorPersona=0;
+                this.errorMostrarMsjPersona =[];
 
-                if (this.idcategoria==0) this.errorMostrarMsjArticulo.push("Seleccione una categoría.");
-                if (!this.nombre) this.errorMostrarMsjArticulo.push("El nombre del artículo no puede estar vacío.");
-                if (!this.stock) this.errorMostrarMsjArticulo.push("El stock del artículo debe ser un número y no puede estar vacío.");
-                if (!this.precio_venta) this.errorMostrarMsjArticulo.push("El precio venta del artículo debe ser un número y no puede estar vacío.");
+                if (!this.nombre) this.errorMostrarMsjPersona.push("El nombre de la Persona no puede estar vacío.");
+                if (!this.num_documento) this.errorMostrarMsjPersona.push("El numero de documento no puede estar vacío.");
+                if (!this.direccion) this.errorMostrarMsjPersona.push("La dirección no puede estar vacía.");
+                if (!this.telefono) this.errorMostrarMsjPersona.push("El telefono no puede estar vacío.");
+                if (!this.email) this.errorMostrarMsjPersona.push("El email no puede estar vacío.");
 
-                if (this.errorMostrarMsjArticulo.length) this.errorArticulo = 1;
+                if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
 
-                return this.errorArticulo;
+                return this.errorPersona;
             },
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
-                this.idcategoria= 0;
-                this.nombre_categoria = '';
-                this.codigo = '';
                 this.nombre = '';
-                this.precio_venta = 0;
-                this.stock = 0;
-                this.descripcion = '';
-		        this.errorArticulo=0;
+                this.tipo_documento = 'CC';
+                this.num_documento = '';
+                this.direccion = '';
+                this.telefono = '';
+                this.email = ''; 
+		        this.errorPersona=0;
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
-                    case "articulo":
+                    case "persona":
                     {
                         switch(accion){
                             case 'registrar':
                             {
                                 this.modal = 1;
-                                this.tituloModal = 'Registrar Artículo';
-                                this.idcategoria=0;
-                                this.nombre_categoria='';
-                                this.codigo='';
-                                this.nombre= '';
-                                this.precio_venta=0;
-                                this.stock=0;
-                                this.descripcion = '';
+                                this.tituloModal = 'Registrar Cliente';
+                                this.nombre = '';
+                                this.tipo_documento = 'CC';
+                                this.num_documento = '';
+                                this.direccion = '';
+                                this.telefono = '';
+                                this.email = ''; 
                                 this.tipoAccion = 1;
                                 break;
                             }
@@ -325,15 +329,15 @@
                             {
                                 //console.log(data);
                                 this.modal=1;
-                                this.tituloModal='Actualizar Artículo';
+                                this.tituloModal='Actualizar Cliente';
                                 this.tipoAccion=2;
-                                this.articulo_id=data['id'];
-                                this.idcategoria=data['idcategoria'];
-                                this.codigo=data['codigo'];
+                                this.persona_id=data['id'];
                                 this.nombre = data['nombre'];
-                                this.stock=data['stock'];
-                                this.precio_venta=data['precio_venta'];
-                                this.descripcion= data['descripcion'];
+                                this.tipo_documento = data['tipo_documento'];
+                                this.num_documento = data['num_documento'];
+                                this.direccion = data['direccion'];
+                                this.telefono = data['telefono'];
+                                this.email = data['email']; 
                                 break;
                             }
                         }

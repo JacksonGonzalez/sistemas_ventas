@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proveedor;
+use App\Persona;
+use Illuminate\Support\Facades\DB;
 
 class ProveedorController extends Controller
 {
@@ -16,9 +18,15 @@ class ProveedorController extends Controller
         $criterio = $request->criterio;
 
         if($buscar == ''){
-            $personas = Proveedor::orderBy('id', 'DESC')->paginate(3);
+            $personas = Proveedor::join('personas', 'proveedores.id', '=', 'personas.id')
+            ->select('personas.id', 'personas.nombre', 'personas.tipo_documento', 'personas.num_documento', 
+            'personas.direccion', 'personas.telefono', 'personas.email', 'proveedores.contacto', 'proveedores.telefono_contacto')
+            ->orderBy('personas.id', 'DESC')->paginate(3);
         }else{
-            $personas = Persona::where($criterio, 'like', '%'.$buscar.'%')->orderBy('id', 'desc')->paginate(3);
+            $personas = Proveedor::join('personas', 'proveedores.id', '=', 'personas.id')
+            ->select('personas.id', 'personas.nombre', 'personas.tipo_documento', 'personas.num_documento', 
+            'personas.direccion', 'personas.telefono', 'personas.email', 'proveedores.contacto', 'proveedores.telefono_contacto')            
+            ->where('personas.'.$criterio, 'like', '%'.$buscar.'%')->orderBy('personas.id', 'desc')->paginate(3);
         }
 
         return [
@@ -38,27 +46,65 @@ class ProveedorController extends Controller
     {
         //validar seguridad por HTTP
         if(!$request->ajax()) return redirect('/');
-        $persona = new Persona();
-        $persona->nombre = $request->nombre;
-        $persona->tipo_documento = $request->tipo_documento;
-        $persona->num_documento = $request->num_documento;
-        $persona->direccion = $request->direccion;
-        $persona->telefono = $request->telefono;
-        $persona->email = $request->email;
-        $persona->save();
+
+        try{
+            DB::beginTransaction();
+            $persona = new Persona();
+            $persona->nombre = $request->nombre;
+            $persona->tipo_documento = $request->tipo_documento;
+            $persona->num_documento = $request->num_documento;
+            $persona->direccion = $request->direccion;
+            $persona->telefono = $request->telefono;
+            $persona->email = $request->email;
+
+            $persona->save(); 
+            
+            $proveedor = new Proveedor();
+            $proveedor->contacto = $request->contacto;
+            $proveedor->telefono_contacto = $request->telefono_contacto;
+            $proveedor->id = $persona->id;
+
+            $proveedor->save();
+
+            DB::commit();
+
+        }catch(Exception $e){
+            DB::rollback();
+        }
+
     }
 
     public function update(Request $request)
     {
         //validar seguridad por HTTP
         if(!$request->ajax()) return redirect('/');
-        $persona = Persona::findOrFail($request->id);
-        $persona->nombre = $request->nombre;
-        $persona->tipo_documento = $request->tipo_documento;
-        $persona->num_documento = $request->num_documento;
-        $persona->direccion = $request->direccion;
-        $persona->telefono = $request->telefono;
-        $persona->email = $request->email;
-        $persona->save();
+
+        try{
+            DB::beginTransaction();
+
+            //Busca primero el proveedor a modificar
+            $proveedor  = Proveedor::findOrFail($request->id);
+
+            $persona  = Persona::findOrFail($proveedor->id);
+
+            $persona->nombre = $request->nombre;
+            $persona->tipo_documento = $request->tipo_documento;
+            $persona->num_documento = $request->num_documento;
+            $persona->direccion = $request->direccion;
+            $persona->telefono = $request->telefono;
+            $persona->email = $request->email;
+
+            $persona->save(); 
+
+            $proveedor->contacto = $request->contacto;
+            $proveedor->telefono_contacto = $request->telefono_contacto;
+
+            $proveedor->save();
+
+            DB::commit();
+
+        }catch(Exception $e){
+            DB::rollback();
+        }
     }
 }

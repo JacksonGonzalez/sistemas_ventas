@@ -8,7 +8,7 @@
                 <!-- Ejemplo de tabla Listado -->
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Proveedor
+                        <i class="fa fa-align-justify"></i> Proveedores
                         <button type="button" @click="abrirModal('persona','registrar')" class="btn btn-secondary">
                             <i class="icon-plus"></i>&nbsp;Nuevo
                         </button>
@@ -19,10 +19,9 @@
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
                                       <option value="nombre">Nombre</option>
-                                      <option value="descripcion">Descripción</option>
-                                      <option value="num_documento">Numero Documento</option>
+                                      <option value="num_documento">Documento</option>
                                       <option value="email">Email</option>
-                                      <option value="telefono">Movíl</option>
+                                      <option value="telefono">Teléfono</option>
                                     </select>
                                     <input type="text" v-model="buscar" @keyup.enter="listarPersona(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
                                     <button type="submit" @click="listarPersona(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
@@ -34,8 +33,8 @@
                                 <tr>
                                     <th>Opciones</th>
                                     <th>Nombre</th>
-                                    <th>Tipo De Documento</th>
-                                    <th>Num Documento</th>
+                                    <th>Tipo Documento</th>
+                                    <th>Número</th>
                                     <th>Dirección</th>
                                     <th>Teléfono</th>
                                     <th>Email</th>
@@ -47,7 +46,7 @@
                                     <td>
                                         <button type="button" @click="abrirModal('persona','actualizar',persona)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
-                                        </button> &nbsp;
+                                        </button>
                                     </td>
                                     <td v-text="persona.nombre"></td>
                                     <td v-text="persona.tipo_documento"></td>
@@ -88,68 +87,58 @@
                         </div>
                         <div class="modal-body">
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Nombre (*)</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="nombre" class="form-control" placeholder="Nombre de la Persona">                                        
+                                        <input type="text" v-model="nombre" class="form-control" placeholder="Nombre de la persona">                                        
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Tipo de Documento</label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Tipo Documento</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" v-model="tipo_documento">
-                                            <option value="CC">Cedula Ciudadania</option>
-                                            <option value="TI">Tarjeta de Identidad</option>
-                                            <option value="CE">Cedula de Extranjeria</option>
-                                            <option value="PS">Pasaporte</option>
-                                        </select>                                        
+                                        <select v-model="tipo_documento" class="form-control">
+                                            <option value="RUT">RUT</option>
+                                            <option value="CC">CC</option>
+                                            <option value="PASS">PASS</option>
+                                        </select>                                    
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Número de Documento</label>
+                                    <label class="col-md-3 form-control-label" for="text-input">Número</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="num_documento" class="form-control" placeholder="Numero de Documento">                                        
+                                        <input type="text" v-model="num_documento" class="form-control" placeholder="Número de documento">                                        
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Dirección</label>
+                                    <label class="col-md-3 form-control-label" for="email-input">Dirección</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="direccion" class="form-control" placeholder="Dirección">                                        
+                                        <input type="text" v-model="direccion" class="form-control" placeholder="Dirección">
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Telefono</label>
+                                    <label class="col-md-3 form-control-label" for="email-input">Teléfono</label>
                                     <div class="col-md-9">
-                                        <input type="number" v-model="telefono" class="form-control" placeholder="Telefono">                                        
+                                        <input type="text" v-model="telefono" class="form-control" placeholder="Teléfono">
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Email</label>
                                     <div class="col-md-9">
-                                        <input type="email" v-model="email" class="form-control" placeholder="Ingrese el email">
+                                        <input type="email" v-model="email" class="form-control" placeholder="Email">
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Contacto</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="contacto" class="form-control" placeholder="Ingrese el nombre del contacto">
+                                        <input type="text" v-model="contacto" class="form-control" placeholder="Nombre del contacto">
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Telefono de Contacto</label>
+                                    <label class="col-md-3 form-control-label" for="email-input">Teléfono de contacto</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="telefono_contacto" class="form-control" placeholder="Ingrese el telefono del contacto">
+                                        <input type="number" v-model="telefono_contacto" class="form-control" placeholder="Teléfono del contacto">
                                     </div>
                                 </div>
-
 
                                 <div v-show="errorPersona" class="form-group row div-error">
                                     <div class="text-center text-error">
@@ -176,20 +165,18 @@
 </template>
 
 <script>
-    import VueBarcode from 'vue-barcode';
-
     export default {
         data (){
             return {
                 persona_id: 0,
                 nombre : '',
-                tipo_documento : 'CC',
-                num_documento: '',
-                direccion: '',
-                telefono: '',
-                email: '',
-                contacto: '',
-                telefono_contacto: '',
+                tipo_documento : 'RUT',
+                num_documento : '',
+                direccion : '',
+                telefono : '',
+                email : '',
+                contacto : '',
+                telefono_contacto : '',
                 arrayPersona : [],
                 modal : 0,
                 tituloModal : '',
@@ -206,8 +193,7 @@
                 },
                 offset : 3,
                 criterio : 'nombre',
-                buscar : '',
-                arrayCategoria :[]
+                buscar : ''
             }
         },
         computed:{
@@ -268,13 +254,14 @@
 
                 axios.post('/proveedor/registrar',{
                     'nombre': this.nombre,
-                    'tipo_documento' : this.tipo_documento,
+                    'tipo_documento': this.tipo_documento,
                     'num_documento' : this.num_documento,
                     'direccion' : this.direccion,
                     'telefono' : this.telefono,
                     'email' : this.email,
-                    'contacto' : this.contacto,
+                    'contacto': this.contacto,
                     'telefono_contacto': this.telefono_contacto
+
                 }).then(function (response) {
                     me.cerrarModal();
                     me.listarPersona(1,'','nombre');
@@ -291,12 +278,12 @@
 
                 axios.put('/proveedor/actualizar',{
                     'nombre': this.nombre,
-                    'tipo_documento' : this.tipo_documento,
+                    'tipo_documento': this.tipo_documento,
                     'num_documento' : this.num_documento,
                     'direccion' : this.direccion,
                     'telefono' : this.telefono,
                     'email' : this.email,
-                    'contacto' : this.contacto,
+                    'contacto': this.contacto,
                     'telefono_contacto': this.telefono_contacto,
                     'id': this.persona_id
                 }).then(function (response) {
@@ -305,17 +292,12 @@
                 }).catch(function (error) {
                     console.log(error);
                 }); 
-            },
+            },            
             validarPersona(){
                 this.errorPersona=0;
                 this.errorMostrarMsjPersona =[];
 
-                if (!this.nombre) this.errorMostrarMsjPersona.push("El nombre de la Persona no puede estar vacío.");
-                if (!this.num_documento) this.errorMostrarMsjPersona.push("El numero de documento no puede estar vacío.");
-                if (!this.direccion) this.errorMostrarMsjPersona.push("La dirección no puede estar vacía.");
-                if (!this.telefono) this.errorMostrarMsjPersona.push("El telefono no puede estar vacío.");
-                if (!this.email) this.errorMostrarMsjPersona.push("El email no puede estar vacío.");
-                if (!this.contacto) this.errorMostrarMsjPersona.push("El nombre del contacto no puede estar vacío.");
+                if (!this.nombre) this.errorMostrarMsjPersona.push("El nombre de la persona no puede estar vacío.");
 
                 if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
 
@@ -324,15 +306,16 @@
             cerrarModal(){
                 this.modal=0;
                 this.tituloModal='';
-                this.nombre = '';
-                this.tipo_documento = 'CC';
-                this.num_documento = '';
-                this.direccion = '';
-                this.telefono = '';
-                this.email = ''; 
-                this.contacto = '';
-                this.telefono_contacto ='';
-		        this.errorPersona=0;
+                this.nombre='';
+                this.tipo_documento='RUT';
+                this.num_documento='';
+                this.direccion='';
+                this.telefono='';
+                this.email='';
+                this.contacto='';
+                this.telefono_contacto='';
+                this.errorPersona=0;
+
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
@@ -343,14 +326,14 @@
                             {
                                 this.modal = 1;
                                 this.tituloModal = 'Registrar Proveedor';
-                                this.nombre = '';
-                                this.tipo_documento = 'CC';
-                                this.num_documento = '';
-                                this.direccion = '';
-                                this.telefono = '';
-                                this.email = '';
-                                this.contacto = '';
-                                this.telefono_contacto ='';
+                                this.nombre= '';
+                                this.tipo_documento='RUT';
+                                this.num_documento='';
+                                this.direccion='';
+                                this.telefono='';
+                                this.email='';
+                                this.contacto='';
+                                this.telefono_contacto='';
                                 this.tipoAccion = 1;
                                 break;
                             }
@@ -366,15 +349,14 @@
                                 this.num_documento = data['num_documento'];
                                 this.direccion = data['direccion'];
                                 this.telefono = data['telefono'];
-                                this.email = data['email']; 
+                                this.email = data['email'];
                                 this.contacto = data['contacto'];
-                                this.telefono_contacto = ['telefono_contacto'];
+                                this.telefono_contacto = data['telefono_contacto'];
                                 break;
                             }
                         }
                     }
                 }
-               
             }
         },
         mounted() {

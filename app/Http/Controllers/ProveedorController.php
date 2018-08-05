@@ -77,34 +77,33 @@ class ProveedorController extends Controller
     public function update(Request $request)
     {
         //validar seguridad por HTTP
-        if(!$request->ajax()) return redirect('/');
-
+        if (!$request->ajax()) return redirect('/');
+         
         try{
             DB::beginTransaction();
-
-            //Busca primero el proveedor a modificar
-            $proveedor  = Proveedor::findOrFail($request->id);
-
-            $persona  = Persona::findOrFail($proveedor->id);
-
+ 
+            //Buscar primero el proveedor a modificar
+            $proveedor = Proveedor::findOrFail($request->id);
+ 
+            $persona = Persona::findOrFail($proveedor->id);
+ 
             $persona->nombre = $request->nombre;
             $persona->tipo_documento = $request->tipo_documento;
             $persona->num_documento = $request->num_documento;
             $persona->direccion = $request->direccion;
             $persona->telefono = $request->telefono;
             $persona->email = $request->email;
-
-            $persona->save(); 
-
+            $persona->save();
+ 
+             
             $proveedor->contacto = $request->contacto;
             $proveedor->telefono_contacto = $request->telefono_contacto;
-
             $proveedor->save();
-
+ 
             DB::commit();
-
-        }catch(Exception $e){
-            DB::rollback();
+ 
+        } catch (Exception $e){
+            DB::rollBack();
         }
     }
 }

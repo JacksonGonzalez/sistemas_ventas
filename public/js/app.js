@@ -54933,8 +54933,6 @@ exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    pos
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_barcode__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_barcode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_barcode__);
 //
 //
 //
@@ -55101,26 +55099,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             persona_id: 0,
             nombre: '',
-            tipo_documento: 'CC',
+            tipo_documento: 'RUT',
             num_documento: '',
             direccion: '',
             telefono: '',
@@ -55143,8 +55128,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             offset: 3,
             criterio: 'nombre',
-            buscar: '',
-            arrayCategoria: []
+            buscar: ''
         };
     },
 
@@ -55211,6 +55195,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 'email': this.email,
                 'contacto': this.contacto,
                 'telefono_contacto': this.telefono_contacto
+
             }).then(function (response) {
                 me.cerrarModal();
                 me.listarPersona(1, '', 'nombre');
@@ -55246,12 +55231,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.errorPersona = 0;
             this.errorMostrarMsjPersona = [];
 
-            if (!this.nombre) this.errorMostrarMsjPersona.push("El nombre de la Persona no puede estar vacío.");
-            if (!this.num_documento) this.errorMostrarMsjPersona.push("El numero de documento no puede estar vacío.");
-            if (!this.direccion) this.errorMostrarMsjPersona.push("La dirección no puede estar vacía.");
-            if (!this.telefono) this.errorMostrarMsjPersona.push("El telefono no puede estar vacío.");
-            if (!this.email) this.errorMostrarMsjPersona.push("El email no puede estar vacío.");
-            if (!this.contacto) this.errorMostrarMsjPersona.push("El nombre del contacto no puede estar vacío.");
+            if (!this.nombre) this.errorMostrarMsjPersona.push("El nombre de la persona no puede estar vacío.");
 
             if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
 
@@ -55261,7 +55241,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.modal = 0;
             this.tituloModal = '';
             this.nombre = '';
-            this.tipo_documento = 'CC';
+            this.tipo_documento = 'RUT';
             this.num_documento = '';
             this.direccion = '';
             this.telefono = '';
@@ -55282,7 +55262,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     this.modal = 1;
                                     this.tituloModal = 'Registrar Proveedor';
                                     this.nombre = '';
-                                    this.tipo_documento = 'CC';
+                                    this.tipo_documento = 'RUT';
                                     this.num_documento = '';
                                     this.direccion = '';
                                     this.telefono = '';
@@ -55306,7 +55286,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     this.telefono = data['telefono'];
                                     this.email = data['email'];
                                     this.contacto = data['contacto'];
-                                    this.telefono_contacto = ['telefono_contacto'];
+                                    this.telefono_contacto = data['telefono_contacto'];
                                     break;
                                 }
                         }
@@ -55334,7 +55314,7 @@ var render = function() {
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header" }, [
           _c("i", { staticClass: "fa fa-align-justify" }),
-          _vm._v(" Proveedor\n                "),
+          _vm._v(" Proveedores\n                "),
           _c(
             "button",
             {
@@ -55390,12 +55370,8 @@ var render = function() {
                       _vm._v("Nombre")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "descripcion" } }, [
-                      _vm._v("Descripción")
-                    ]),
-                    _vm._v(" "),
                     _c("option", { attrs: { value: "num_documento" } }, [
-                      _vm._v("Numero Documento")
+                      _vm._v("Documento")
                     ]),
                     _vm._v(" "),
                     _c("option", { attrs: { value: "email" } }, [
@@ -55403,7 +55379,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("option", { attrs: { value: "telefono" } }, [
-                      _vm._v("Movíl")
+                      _vm._v("Teléfono")
                     ])
                   ]
                 ),
@@ -55479,8 +55455,7 @@ var render = function() {
                           }
                         },
                         [_c("i", { staticClass: "icon-pencil" })]
-                      ),
-                      _vm._v("  \n                            ")
+                      )
                     ]),
                     _vm._v(" "),
                     _c("td", {
@@ -55664,7 +55639,7 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("Nombre")]
+                        [_vm._v("Nombre (*)")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -55680,7 +55655,7 @@ var render = function() {
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
-                            placeholder: "Nombre de la Persona"
+                            placeholder: "Nombre de la persona"
                           },
                           domProps: { value: _vm.nombre },
                           on: {
@@ -55702,7 +55677,7 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("Tipo de Documento")]
+                        [_vm._v("Tipo Documento")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -55735,20 +55710,16 @@ var render = function() {
                             }
                           },
                           [
+                            _c("option", { attrs: { value: "RUT" } }, [
+                              _vm._v("RUT")
+                            ]),
+                            _vm._v(" "),
                             _c("option", { attrs: { value: "CC" } }, [
-                              _vm._v("Cedula Ciudadania")
+                              _vm._v("CC")
                             ]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "TI" } }, [
-                              _vm._v("Tarjeta de Identidad")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "CE" } }, [
-                              _vm._v("Cedula de Extranjeria")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "PS" } }, [
-                              _vm._v("Pasaporte")
+                            _c("option", { attrs: { value: "PASS" } }, [
+                              _vm._v("PASS")
                             ])
                           ]
                         )
@@ -55762,7 +55733,7 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("Número de Documento")]
+                        [_vm._v("Número")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -55777,8 +55748,8 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
-                            type: "number",
-                            placeholder: "Numero de Documento"
+                            type: "text",
+                            placeholder: "Número de documento"
                           },
                           domProps: { value: _vm.num_documento },
                           on: {
@@ -55798,7 +55769,7 @@ var render = function() {
                         "label",
                         {
                           staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
+                          attrs: { for: "email-input" }
                         },
                         [_vm._v("Dirección")]
                       ),
@@ -55833,9 +55804,9 @@ var render = function() {
                         "label",
                         {
                           staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
+                          attrs: { for: "email-input" }
                         },
-                        [_vm._v("Telefono")]
+                        [_vm._v("Teléfono")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -55849,7 +55820,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "number", placeholder: "Telefono" },
+                          attrs: { type: "text", placeholder: "Teléfono" },
                           domProps: { value: _vm.telefono },
                           on: {
                             input: function($event) {
@@ -55884,10 +55855,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: {
-                            type: "email",
-                            placeholder: "Ingrese el email"
-                          },
+                          attrs: { type: "email", placeholder: "Email" },
                           domProps: { value: _vm.email },
                           on: {
                             input: function($event) {
@@ -55924,7 +55892,7 @@ var render = function() {
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
-                            placeholder: "Ingrese el nombre del contacto"
+                            placeholder: "Nombre del contacto"
                           },
                           domProps: { value: _vm.contacto },
                           on: {
@@ -55946,7 +55914,7 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "email-input" }
                         },
-                        [_vm._v("Telefono de Contacto")]
+                        [_vm._v("Teléfono de contacto")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -55961,8 +55929,8 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
-                            type: "text",
-                            placeholder: "Ingrese el telefono del contacto"
+                            type: "number",
+                            placeholder: "Teléfono del contacto"
                           },
                           domProps: { value: _vm.telefono_contacto },
                           on: {
@@ -56082,9 +56050,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Nombre")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Tipo De Documento")]),
+        _c("th", [_vm._v("Tipo Documento")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Num Documento")]),
+        _c("th", [_vm._v("Número")]),
         _vm._v(" "),
         _c("th", [_vm._v("Dirección")]),
         _vm._v(" "),

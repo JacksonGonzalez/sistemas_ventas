@@ -48,6 +48,16 @@
                                         <button type="button" @click="abrirModal('persona','actualizar',persona)" class="btn btn-warning btn-sm">
                                           <i class="icon-pencil"></i>
                                         </button>
+                                        <template v-if="persona.condicion">
+                                            <button type="button" @click="desactivarUsuario(persona.id)" class="btn btn-danger btn-sm">
+                                                <i class="icon-trash"></i>
+                                            </button>
+                                        </template>
+                                        <template v-else>
+                                            <button type="button" @click="activarUsuario(persona.id)" class="btn btn-info btn-sm">
+                                                <i class="icon-check"></i>
+                                            </button>
+                                        </template>
                                     </td>
                                     <td v-text="persona.nombre"></td>
                                     <td v-text="persona.tipo_documento"></td>
@@ -320,7 +330,73 @@
                 }).catch(function (error) {
                     console.log(error);
                 }); 
-            },          
+            },
+            desactivarUsuario(id){
+
+                swal({
+                    title: 'Estas seguro de desactivar este Usuario?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar!',
+                    cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.value) {
+                            
+                            let me = this;
+
+                            axios.put('/user/desactivar',{
+                                'id' : id
+                            }).then(function (response) {
+                            
+                                me.listarPersona(1, '', 'nombre');
+
+                                swal(
+                                'Desactivado!',
+                                'Su usuario ha sido desactivado.',
+                                'success'
+                                )
+                            }).catch(function (error) {
+                                console.log(error);
+                            });
+
+                        }
+                })
+            },
+            activarUsuario(id){
+
+                swal({
+                    title: 'Estas seguro de activar este Usuario?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar!',
+                    cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.value) {
+                            
+                            let me = this;
+
+                            axios.put('/user/activar',{
+                                'id' : id
+                            }).then(function (response) {
+                            
+                                me.listarPersona(1, '', 'nombre');
+
+                                swal(
+                                'Activado!',
+                                'Su usuario ha sido activado.',
+                                'success'
+                                )
+                            }).catch(function (error) {
+                                console.log(error);
+                            });
+
+                        }
+                })
+            },         
             validarPersona(){
                 this.errorPersona=0;
                 this.errorMostrarMsjPersona =[];

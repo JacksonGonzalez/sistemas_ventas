@@ -40,7 +40,7 @@ Route::get('/rol', 'RolController@index');
 Route::get('/rol/selectRol', 'RolController@selectRol');
 
 Route::get('/user', 'UserController@index');
-Route::post('/user/registrar', 'ArticuloController@store');
-Route::put('/user/actualizar', 'ArticuloController@update');
-Route::put('/user/desactivar', 'ArticuloController@desactivar');
-Route::put('/user/activar', 'ArticuloController@activar');
+Route::post('/user/registrar', 'UserController@store');
+Route::put('/user/actualizar', 'UserController@update');
+Route::put('/user/desactivar', 'UserController@desactivar');
+Route::put('/user/activar', 'UserController@activar');

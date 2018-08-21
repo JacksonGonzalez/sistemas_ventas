@@ -278,15 +278,16 @@
                 
                 let me = this;
 
-                axios.post('/proveedor/registrar',{
+                axios.post('/user/registrar',{
                     'nombre': this.nombre,
                     'tipo_documento': this.tipo_documento,
                     'num_documento' : this.num_documento,
                     'direccion' : this.direccion,
                     'telefono' : this.telefono,
                     'email' : this.email,
-                    'contacto': this.contacto,
-                    'telefono_contacto': this.telefono_contacto
+                    'usuario': this.usuario,
+                    'password': this.password,
+                    'idrol' : this.idrol
 
                 }).then(function (response) {
                     me.cerrarModal();
@@ -302,15 +303,16 @@
                 
                 let me = this;
 
-                axios.put('/proveedor/actualizar',{
+                axios.put('/user/actualizar',{
                     'nombre': this.nombre,
                     'tipo_documento': this.tipo_documento,
                     'num_documento' : this.num_documento,
                     'direccion' : this.direccion,
                     'telefono' : this.telefono,
                     'email' : this.email,
-                    'contacto': this.contacto,
-                    'telefono_contacto': this.telefono_contacto,
+                    'usuario': this.usuario,
+                    'password': this.password,
+                    'idrol' : this.idrol,
                     'id': this.persona_id
                 }).then(function (response) {
                     me.cerrarModal();
@@ -318,12 +320,15 @@
                 }).catch(function (error) {
                     console.log(error);
                 }); 
-            },            
+            },          
             validarPersona(){
                 this.errorPersona=0;
                 this.errorMostrarMsjPersona =[];
 
                 if (!this.nombre) this.errorMostrarMsjPersona.push("El nombre de la persona no puede estar vacío.");
+                if (!this.usuario) this.errorMostrarMsjPersona.push("El nombre de usuario no puede estar vacío.");
+                if (!this.password) this.errorMostrarMsjPersona.push("La contraseña no puede estar vacía.");
+                if (this.idrol == 0) this.errorMostrarMsjPersona.push("Debe seleccionar un rol.");
 
                 if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
 

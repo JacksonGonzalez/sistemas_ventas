@@ -48,9 +48,8 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        //validar seguridad por HTTP
-        if(!$request->ajax()) return redirect('/');
-
+        if (!$request->ajax()) return redirect('/');
+         
         try{
             DB::beginTransaction();
             $persona = new Persona();
@@ -60,29 +59,30 @@ class UserController extends Controller
             $persona->direccion = $request->direccion;
             $persona->telefono = $request->telefono;
             $persona->email = $request->email;
-
-            $persona->save(); 
-            
+            $persona->save();
+ 
             $user = new User();
             $user->usuario = $request->usuario;
-            $user->password = bcrypt ( $request->password);
+            $user->password = bcrypt( $request->password);
             $user->condicion = '1';
-            $user->idrol = $request->idrol;
+            $user->idrol = $request->idrol;          
+ 
             $user->id = $persona->id;
-
+ 
             $user->save();
-
+ 
             DB::commit();
-
-        }catch(Exception $e){
-            DB::rollback();
+ 
+        } catch (Exception $e){
+            DB::rollBack();
         }
-
+ 
+         
+         
     }
-
+ 
     public function update(Request $request)
     {
-        //validar seguridad por HTTP
         if (!$request->ajax()) return redirect('/');
          
         try{
@@ -101,18 +101,20 @@ class UserController extends Controller
             $persona->email = $request->email;
             $persona->save();
  
+             
             $user->usuario = $request->usuario;
-            $user->password = bcrypt ( $request->password);
+            $user->password = bcrypt( $request->password);
             $user->condicion = '1';
             $user->idrol = $request->idrol;
-
             $user->save();
+ 
  
             DB::commit();
  
         } catch (Exception $e){
             DB::rollBack();
         }
+ 
     }
 
     public function desactivar(Request $request)

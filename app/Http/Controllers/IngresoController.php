@@ -97,7 +97,7 @@ class IngresoController extends Controller
         //validar seguridad por HTTP
         if(!$request->ajax()) return redirect('/');
         $ingreso = Ingreso::findOrFail($request->id);
-        $ingreso->condicion = 'Anulado';
+        $ingreso->estado = 'Anulado';
         $ingreso->save();
     }
 }

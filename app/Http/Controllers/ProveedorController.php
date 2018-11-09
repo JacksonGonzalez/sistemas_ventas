@@ -42,6 +42,20 @@ class ProveedorController extends Controller
         ];
     } 
 
+    public function selectProveedor(Request $request){
+        if (!$request->ajax()) return redirect('/');
+
+        $filtro = $request->filtro;
+        $provedores = Proveedor::join('personas', 'proveedores.id', '=', 'personas.id')
+        ->where('personas.nombre', 'like', '%'. $filtro .'%')
+        ->orWhere('personas.num_documento', 'like', '%'. $filtro .'%')
+        ->select('personas.id', 'personas.nombre', 'personas.num_documento')
+        ->orderBy('personas.nombre', 'asc')->get();
+
+        return ['proveedores' => $provedores];
+
+    }
+
     public function store(Request $request)
     {
         //validar seguridad por HTTP

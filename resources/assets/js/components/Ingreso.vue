@@ -504,7 +504,24 @@
                 }
             },
             agregarDetalleModal(data = []){
+                let me = this;
 
+                if(me.encuentra(data['id'])){
+                    swal({
+                        type: 'error',
+                        title: 'Error...',
+                        text: 'Ese articulo ya se encuentra registrado!'
+                    })
+                }else{
+                    me.arrayDetalle.push({
+                        idarticulo: data['id'],
+                        articulo : data['nombre'],
+                        cantidad : 1,
+                        precio : 1
+                    });
+                    
+                    me.cerrarModal();
+                }
             },
             listarArticulo (buscar,criterio){
                 let me=this;
@@ -606,7 +623,7 @@
 
             },
             abrirModal(){
-                
+                this.arrayArticulo = [];
                 this.modal = 1;
                 this.tituloModal = 'Seleccione uno o varios Articulos';                   
 

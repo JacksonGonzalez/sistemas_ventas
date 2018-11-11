@@ -28,6 +28,7 @@ Route::put('/articulo/actualizar', 'ArticuloController@update');
 Route::put('/articulo/desactivar', 'ArticuloController@desactivar');
 Route::put('/articulo/activar', 'ArticuloController@activar');
 Route::get('/articulo/buscarArticulo', 'ArticuloController@buscarArticulo');
+Route::get('/articulo/listarArticulo', 'ArticuloController@listarArticulo');
 
 
 Route::get('/cliente', 'ClienteController@index');
